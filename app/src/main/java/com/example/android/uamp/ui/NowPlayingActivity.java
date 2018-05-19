@@ -15,11 +15,13 @@
  */
 package com.example.android.uamp.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.UiModeManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.android.uamp.utils.LogHelper;
 
@@ -36,6 +38,15 @@ public class NowPlayingActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //动态权限申请
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                },
+                0);
+
         LogHelper.d(TAG, "onCreate");
         Intent newIntent;
 

@@ -15,6 +15,7 @@
  */
 package com.example.android.uamp.ui;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.ComponentName;
@@ -26,6 +27,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -59,6 +61,14 @@ public abstract class BaseActivity extends ActionBarCastActivity implements Medi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //动态权限申请
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                },
+                0);
+
         Global.gContext = getApplicationContext();
 
         LogHelper.d(TAG, "Activity onCreate");

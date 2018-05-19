@@ -15,8 +15,10 @@
  */
 package com.example.android.uamp.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
@@ -32,7 +34,7 @@ public class PlaceholderActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placeholder);
+
         initializeToolbar();
         Global.gIsRemote = true;
         //if (Global.gMusicProvider != null) {
