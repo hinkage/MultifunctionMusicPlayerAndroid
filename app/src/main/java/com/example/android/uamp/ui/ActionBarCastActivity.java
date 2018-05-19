@@ -19,6 +19,7 @@ import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -35,6 +36,7 @@ import android.view.View;
 
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
+import com.example.android.uamp.model.LocalSource;
 import com.example.android.uamp.model.MusicProvider;
 import com.example.android.uamp.utils.Global;
 import com.example.android.uamp.utils.LogHelper;
@@ -157,6 +159,7 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Global.gContext = getApplicationContext();
+        LocalSource.mBitmap = BitmapFactory.decodeResource(Global.gContext.getResources(), R.drawable.local_bg);
         LogHelper.d(TAG, "Activity onCreate");
 
         int playServicesAvailable =

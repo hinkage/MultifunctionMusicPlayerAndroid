@@ -1,15 +1,21 @@
 package com.example.android.uamp.model;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.v4.media.MediaMetadataCompat;
 
+import com.example.android.uamp.R;
 import com.example.android.uamp.utils.Global;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class LocalSource implements MusicProviderSource {
+    public static Bitmap mBitmap = null;
+    public static int mCoverFlowSize = 1;
+
     private static Cursor mCursor = Global.gContext.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             new String[] {
                     MediaStore.Audio.Media._ID,
@@ -63,6 +69,7 @@ public class LocalSource implements MusicProviderSource {
 
             num++;
         }
+        LocalSource.mCoverFlowSize = num;
 
         return tracks.iterator();
     }

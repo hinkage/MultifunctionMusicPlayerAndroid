@@ -56,6 +56,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import at.technikum.mti.fancycoverflow.FancyCoverFlow;
+import at.technikum.mti.fancycoverflow.example.ViewGroupExampleAdapter;
+
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
@@ -64,6 +67,7 @@ import static android.view.View.VISIBLE;
  * depicting the album art. The activity also has controls to seek/pause/play the audio.
  */
 public class FullScreenPlayerActivity extends ActionBarCastActivity {
+    private FancyCoverFlow mFancyCoverFlow;
     private boolean lrcPathChanged = false;
     private String lrcPath = null;
     private static final String TAG = LogHelper.makeLogTag(FullScreenPlayerActivity.class);
@@ -149,8 +153,15 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             getSupportActionBar().setTitle("");
         }
 
-        mBackgroundImage = (ImageView) findViewById(R.id.background_image);
-        mBackgroundImage.setImageResource(R.drawable.local_bg);
+        mFancyCoverFlow = (FancyCoverFlow) findViewById(R.id.fancyCoverFlow);
+        mFancyCoverFlow.setReflectionEnabled(true);
+        mFancyCoverFlow.setReflectionRatio(0.3f);
+        mFancyCoverFlow.setReflectionGap(0);
+
+        mFancyCoverFlow.setAdapter(new ViewGroupExampleAdapter());
+
+        //mBackgroundImage = (ImageView) findViewById(R.id.background_image);
+        //mBackgroundImage.setImageResource(R.drawable.local_bg);
         mPauseDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_pause_white_48dp);
         mPlayDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_play_arrow_white_48dp);
         mPlayPause = (ImageView) findViewById(R.id.play_pause);
@@ -333,6 +344,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             //mBackgroundImage.setImageBitmap(bmp);
             //像上面那样同样无法显示图片
             //事实是，图片本身的问题，换个大号的jpg图片就可以了
+
             return;
         }
         String artUrl = null;
@@ -348,7 +360,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         }
         if (art != null) {
             // if we have the art cached or from the MediaDescription, use it:
-            mBackgroundImage.setImageBitmap(art);
+            //mBackgroundImage.setImageBitmap(art);
         } else {
             // otherwise, fetch a high res version and update:
             cache.fetch(artUrl, new AlbumArtCache.FetchListener() {
@@ -357,7 +369,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     // sanity check, in case a new fetch request has been done while
                     // the previous hasn't yet returned:
                     if (artUrl.equals(mCurrentArtUrl)) {
-                        mBackgroundImage.setImageBitmap(bitmap);
+                        //mBackgroundImage.setImageBitmap(bitmap);
                     }
                 }
             });
