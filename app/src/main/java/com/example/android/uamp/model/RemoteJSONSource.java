@@ -44,7 +44,7 @@ import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_AR
  */
 public class RemoteJSONSource implements MusicProviderSource {
     public static boolean isIconDownloaded = false;
-    public static ArrayList<Bitmap> mBitmapList;
+    public static ArrayList<Bitmap> mBitmapList = new ArrayList<>();
 
     private static final String TAG = LogHelper.makeLogTag(RemoteJSONSource.class);
 
@@ -106,6 +106,7 @@ public class RemoteJSONSource implements MusicProviderSource {
                             e.printStackTrace();
                         }
                         RemoteJSONSource.mBitmapList.add(bmp);
+                        i++;
                     }
                     RemoteJSONSource.isIconDownloaded = true;
                 }
