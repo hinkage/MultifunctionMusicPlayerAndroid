@@ -62,15 +62,6 @@ public class MusicPlayerActivity extends BaseActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogHelper.d(TAG, "Activity onCreate");
-        //动态权限申请
-        ActivityCompat.requestPermissions(this,
-                new String[] {
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                },
-                0);
-
-        setContentView(R.layout.activity_player);
 
         initializeToolbar();
         initializeFromParams(savedInstanceState, getIntent());
