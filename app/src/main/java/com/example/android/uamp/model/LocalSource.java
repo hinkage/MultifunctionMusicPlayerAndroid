@@ -8,11 +8,16 @@ import android.support.v4.media.MediaMetadataCompat;
 
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.Global;
+import com.example.android.uamp.utils.MediaIDHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+
+import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
 
 public class LocalSource implements MusicProviderSource {
+    public static LinkedHashMap<String[], Bitmap> mMusicMap = new LinkedHashMap<>();
     public static Bitmap mBitmap = null;
     public static int mCoverFlowSize = 1;
 
@@ -67,6 +72,12 @@ public class LocalSource implements MusicProviderSource {
 
             tracks.add(mediaMetadataCompat);
 
+            String musicId = MediaIDHelper.createMediaID(
+                    mediaMetadataCompat.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, genre);
+            String[] key = new String[]{null, null};
+            key[0] = musicId;
+            key[1] = title;
+            mMusicMap.put(key, mBitmap);
             num++;
         }
         LocalSource.mCoverFlowSize = num;

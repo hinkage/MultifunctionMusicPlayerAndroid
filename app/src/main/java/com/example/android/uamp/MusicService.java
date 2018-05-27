@@ -44,17 +44,12 @@ import com.example.android.uamp.playback.Playback;
 import com.example.android.uamp.playback.PlaybackManager;
 import com.example.android.uamp.playback.QueueManager;
 import com.example.android.uamp.ui.NowPlayingActivity;
-import com.example.android.uamp.utils.CarHelper;
 import com.example.android.uamp.utils.Global;
 import com.example.android.uamp.utils.LogHelper;
-import com.example.android.uamp.utils.TvHelper;
-import com.example.android.uamp.utils.WearHelper;
 import com.google.android.gms.cast.framework.CastContext;
 import com.google.android.gms.cast.framework.CastSession;
 import com.google.android.gms.cast.framework.SessionManager;
 import com.google.android.gms.cast.framework.SessionManagerListener;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -129,15 +124,14 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
         mPlaybackManager.updatePlaybackState(null);
 
-        int playServicesAvailable =
-                GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        //int playServicesAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
 
-        if (!TvHelper.isTvUiMode(this) && playServicesAvailable == ConnectionResult.SUCCESS) {
-            mCastSessionManager = CastContext.getSharedInstance(this).getSessionManager();
-            mCastSessionManagerListener = new CastSessionManagerListener();
-            mCastSessionManager.addSessionManagerListener(mCastSessionManagerListener,
-                    CastSession.class);
-        }
+        //if (!TvHelper.isTvUiMode(this) && playServicesAvailable == ConnectionResult.SUCCESS) {
+        //    mCastSessionManager = CastContext.getSharedInstance(this).getSessionManager();
+        //    mCastSessionManagerListener = new CastSessionManagerListener();
+        //    mCastSessionManager.addSessionManagerListener(mCastSessionManagerListener,
+        //            CastSession.class);
+        //}
         //mMusicProvider.retrieveMediaAsync(null);
 
         //LocalPlayback playback = new LocalPlayback(this, mMusicProvider);
@@ -261,9 +255,9 @@ public class MusicService extends MediaBrowserServiceCompat implements
         mSession.setSessionActivity(pi);
 
         mSessionExtras = new Bundle();
-        CarHelper.setSlotReservationFlags(mSessionExtras, true, true, true);
-        WearHelper.setSlotReservationFlags(mSessionExtras, true, true);
-        WearHelper.setUseBackgroundFromTheme(mSessionExtras, true);
+        //CarHelper.setSlotReservationFlags(mSessionExtras, true, true, true);
+        //WearHelper.setSlotReservationFlags(mSessionExtras, true, true);
+        //WearHelper.setUseBackgroundFromTheme(mSessionExtras, true);
         mSession.setExtras(mSessionExtras);
 
         mPlaybackManager.updatePlaybackState(null);
@@ -274,7 +268,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
             throw new IllegalStateException("Could not create a MediaNotificationManager", e);
         }
 
-        int playServicesAvailable =
+        /*int playServicesAvailable =
                 GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
 
         if (!TvHelper.isTvUiMode(this) && playServicesAvailable == ConnectionResult.SUCCESS) {
@@ -282,11 +276,11 @@ public class MusicService extends MediaBrowserServiceCompat implements
             mCastSessionManagerListener = new CastSessionManagerListener();
             mCastSessionManager.addSessionManagerListener(mCastSessionManagerListener,
                     CastSession.class);
-        }
+        }*/
 
         mMediaRouter = MediaRouter.getInstance(getApplicationContext());
 
-        registerCarConnectionReceiver();
+        //registerCarConnectionReceiver();
     }
 
     /**
@@ -364,19 +358,19 @@ public class MusicService extends MediaBrowserServiceCompat implements
             return new MediaBrowserServiceCompat.BrowserRoot(MEDIA_ID_EMPTY_ROOT, null);
         }
         //noinspection StatementWithEmptyBody
-        if (CarHelper.isValidCarPackage(clientPackageName)) {
+        //if (CarHelper.isValidCarPackage(clientPackageName)) {
             // Optional: if your app needs to adapt the music library to show a different subset
             // when connected to the car, this is where you should handle it.
             // If you want to adapt other runtime behaviors, like tweak ads or change some behavior
             // that should be different on cars, you should instead use the boolean flag
             // set by the BroadcastReceiver mCarConnectionReceiver (mIsConnectedToCar).
-        }
+        //}
         //noinspection StatementWithEmptyBody
-        if (WearHelper.isValidWearCompanionPackage(clientPackageName)) {
+        //if (WearHelper.isValidWearCompanionPackage(clientPackageName)) {
             // Optional: if your app needs to adapt the music library for when browsing from a
             // Wear device, you should return a different MEDIA ROOT here, and then,
             // on onLoadChildren, handle it accordingly.
-        }
+        //}
 
         return new BrowserRoot(MEDIA_ID_ROOT, null);
     }
@@ -441,7 +435,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
         mSession.setPlaybackState(newState);
     }
 
-    private void registerCarConnectionReceiver() {
+    /*private void registerCarConnectionReceiver() {
         IntentFilter filter = new IntentFilter(CarHelper.ACTION_MEDIA_STATUS);
         mCarConnectionReceiver = new BroadcastReceiver() {
             @Override
@@ -453,7 +447,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
             }
         };
         registerReceiver(mCarConnectionReceiver, filter);
-    }
+    }*/
 
     private void unregisterCarConnectionReceiver() {
         unregisterReceiver(mCarConnectionReceiver);

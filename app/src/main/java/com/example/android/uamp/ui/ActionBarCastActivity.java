@@ -171,8 +171,10 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_player);
         Global.gContext = getApplicationContext();
-        LocalSource.mBitmap = BitmapFactory.decodeResource(Global.gContext.getResources(), R.drawable.local_bg);
+
         LogHelper.d(TAG, "Activity onCreate");
+
+        LocalSource.mBitmap = BitmapFactory.decodeResource(Global.gContext.getResources(), R.drawable.local_bg);
 
         int playServicesAvailable =
                 GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);

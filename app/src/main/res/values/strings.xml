@@ -23,9 +23,9 @@
     <string name="app_name">Multifunctional Music Player</string>
     <string name="favorite">Favorite</string>
     <string name="error_no_metadata">Unable to retrieve metadata.</string>
-    <string name="browse_genres">Genres</string>
-    <string name="browse_genre_subtitle">Songs by genre</string>
-    <string name="browse_musics_by_genre_subtitle">%1$s songs</string>
+    <string name="browse_genres">音乐类型</string>
+    <string name="browse_genre_subtitle">音乐类型列表</string>
+    <string name="browse_musics_by_genre_subtitle">%1$s 音乐列表</string>
     <string name="random_queue_title">Random music</string>
     <string name="error_no_connection">Cannot connect to server. Please, check your Internet connectivity.</string>
     <string name="error_loading_media">Error Loading Media</string>
@@ -47,8 +47,8 @@
     <string name="open_content_drawer">Open the main menu</string>
     <string name="close_content_drawer">Close the main menu</string>
     <string name="placeholder_message">This is a placeholder for your application code.</string>
-    <string name="drawer_allmusic_title">All Music</string>
-    <string name="drawer_playlists_title">Playlists</string>
+    <string name="drawer_allmusic_title">本地音乐</string>
+    <string name="drawer_playlists_title">网络音乐</string>
     <string name="now_playing">Now Playing</string>
     <string name="background_image_str">Background image for album art</string>
     <string name="search_queue_title">Search results</string>

@@ -28,7 +28,6 @@ import com.example.android.uamp.R;
 import com.example.android.uamp.model.MusicProvider;
 import com.example.android.uamp.utils.LogHelper;
 import com.example.android.uamp.utils.MediaIDHelper;
-import com.example.android.uamp.utils.WearHelper;
 
 /**
  * Manage the interactions among the container service, the queue manager and the actual playback.
@@ -163,7 +162,7 @@ public class PlaybackManager implements Playback.Callback {
         LogHelper.d(TAG, "updatePlaybackState, setting Favorite custom action of music ",
                 musicId, " current favorite=", mMusicProvider.isFavorite(musicId));
         Bundle customActionExtras = new Bundle();
-        WearHelper.setShowCustomActionOnWear(customActionExtras, true);
+        //WearHelper.setShowCustomActionOnWear(customActionExtras, true);
         stateBuilder.addCustomAction(new PlaybackStateCompat.CustomAction.Builder(
                 CUSTOM_ACTION_THUMBS_UP, mResources.getString(R.string.favorite), favoriteIcon)
                 .setExtras(customActionExtras)

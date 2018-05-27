@@ -3,16 +3,22 @@ package at.technikum.mti.fancycoverflow.example;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import android.support.v4.media.session.MediaControllerCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.android.uamp.model.LocalSource;
 import com.example.android.uamp.model.RemoteJSONSource;
+import com.example.android.uamp.ui.FullScreenPlayerActivity;
 import com.example.android.uamp.utils.Global;
+
+import java.util.Iterator;
+import java.util.Map;
 
 import at.technikum.mti.fancycoverflow.FancyCoverFlow;
 import at.technikum.mti.fancycoverflow.FancyCoverFlowAdapter;
@@ -29,7 +35,22 @@ public class ViewGroupExampleAdapter extends FancyCoverFlowAdapter{
             customViewGroup.setLayoutParams(new FancyCoverFlow.LayoutParams(300, 600));
         }
 
-        customViewGroup.getImageView().setImageBitmap((Bitmap) this.getItem(position));
+        Object object = this.getItem(position);
+
+        final Map.Entry<String[], Bitmap> entry = (Map.Entry<String[], Bitmap>) object;
+        customViewGroup.getButton().setText(entry.getKey()[1]);
+        customViewGroup.getButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.d("tag", "onClick: CoverFlow item");
+                if (Global.gFullScreenActivity != null) {
+                    Toast.makeText(Global.gFullScreenActivity, entry.getKey()[0], Toast.LENGTH_SHORT).show();
+                    MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(Global.gFullScreenActivity).getTransportControls();
+                    controls.playFromMediaId(entry.getKey()[0], null);
+                }
+            }
+        });
+        customViewGroup.getImageView().setImageBitmap(entry.getValue());
 
         return customViewGroup;
     }
@@ -47,12 +68,33 @@ public class ViewGroupExampleAdapter extends FancyCoverFlowAdapter{
     public Object getItem(int position) {
         if (Global.gIsRemote == true) {
             if (RemoteJSONSource.isIconDownloaded == true) {
-                return RemoteJSONSource.mBitmapList.get(position);
+                Iterator<Map.Entry<String[], Bitmap>> iterator = RemoteJSONSource.mMusicMap.entrySet().iterator();
+                Map.Entry<String[], Bitmap> entry = null;
+                for (int i = 0; i <= position; i++) {
+                    if (iterator.hasNext()) {
+                        entry = iterator.next();
+                    }
+                }
+                return entry;
             } else {
-                return LocalSource.mBitmap;
+                Iterator<Map.Entry<String[], Bitmap>> iterator = RemoteJSONSource.mMusicMap.entrySet().iterator();
+                Map.Entry<String[], Bitmap> entry = null;
+                for (int i = 0; i <= position; i++) {
+                    if (iterator.hasNext()) {
+                        entry = iterator.next();
+                    }
+                }
+                return entry;
             }
         } else {
-            return LocalSource.mBitmap;
+            Iterator<Map.Entry<String[], Bitmap>> iterator = LocalSource.mMusicMap.entrySet().iterator();
+            Map.Entry<String[], Bitmap> entry = null;
+            for (int i = 0; i <= position; i++) {
+                if (iterator.hasNext()) {
+                    entry = iterator.next();
+                }
+            }
+            return entry;
         }
     }
 
@@ -82,12 +124,6 @@ public class ViewGroupExampleAdapter extends FancyCoverFlowAdapter{
             this.imageView.setAdjustViewBounds(true);
 
             this.button.setText("CoverFlow");
-            this.button.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("tag", "onClick: CoverFlow item");
-                }
-            });
 
             this.addView(this.imageView);
             this.addView(this.button);
@@ -95,6 +131,9 @@ public class ViewGroupExampleAdapter extends FancyCoverFlowAdapter{
 
         private ImageView getImageView() {
             return imageView;
+        }
+        private Button getButton() {
+            return this.button;
         }
     }
 }

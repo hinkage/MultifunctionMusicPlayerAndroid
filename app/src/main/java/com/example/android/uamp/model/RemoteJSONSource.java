@@ -22,6 +22,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import com.example.android.uamp.utils.BitmapHelper;
 import com.example.android.uamp.utils.LogHelper;
 import com.example.android.uamp.utils.LyricHelper;
+import com.example.android.uamp.utils.MediaIDHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,9 +37,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static android.media.MediaMetadata.METADATA_KEY_TITLE;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI;
+import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE;
+import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
 
 /**
  * Utility class to get a list of MusicTrack's based on a server-side JSON
@@ -47,7 +52,7 @@ import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_AR
 public class RemoteJSONSource implements MusicProviderSource {
     public static int mCoverFlowSize = 1;
     public static boolean isIconDownloaded = false;
-    public static ArrayList<Bitmap> mBitmapList = new ArrayList<>();
+    public static LinkedHashMap<String[], Bitmap> mMusicMap = new LinkedHashMap<>();
 
     private static final String TAG = LogHelper.makeLogTag(RemoteJSONSource.class);
 
@@ -101,7 +106,10 @@ public class RemoteJSONSource implements MusicProviderSource {
                         if (i >= tracks.size()) {
                             break;
                         }
+
+                        String[] key = new String[]{null, null};
                         Bitmap bmp = null;
+                        String musicId = null;
                         MediaMetadataCompat metadata = tracks.get(i);
                         String iconUrl = metadata.getString(METADATA_KEY_ALBUM_ART_URI);
                         String asciiUrl=null;
@@ -115,7 +123,13 @@ public class RemoteJSONSource implements MusicProviderSource {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        RemoteJSONSource.mBitmapList.add(bmp);
+                        // = "test" + i;
+                        musicId = MediaIDHelper.createMediaID(
+                                metadata.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, metadata.getString(MediaMetadataCompat.METADATA_KEY_GENRE));
+                        key[0] = musicId;
+                        key[1] = metadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE);
+
+                        RemoteJSONSource.mMusicMap.put(key, bmp);
                         i++;
                     }
                     RemoteJSONSource.isIconDownloaded = true;

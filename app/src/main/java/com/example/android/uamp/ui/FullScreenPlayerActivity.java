@@ -146,6 +146,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Global.gFullScreenActivity = this;
         setContentView(R.layout.activity_full_player);
         initializeToolbar();
         if (getSupportActionBar() != null) {

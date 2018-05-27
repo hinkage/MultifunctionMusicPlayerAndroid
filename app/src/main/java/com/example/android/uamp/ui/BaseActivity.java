@@ -104,7 +104,7 @@ public abstract class BaseActivity extends ActionBarCastActivity implements Medi
             new ComponentName(this, MusicService.class), mConnectionCallback, null);
     }
 
-    private void bindMusicService() {
+    /*private void bindMusicService() {
         ServiceConnection connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -118,7 +118,7 @@ public abstract class BaseActivity extends ActionBarCastActivity implements Medi
         };
         final Intent intent = new Intent(this, MusicService.class);
         bindService(intent, connection, Service.BIND_AUTO_CREATE);
-    }
+    }*/
 
     @Override
     protected void onStart() {
