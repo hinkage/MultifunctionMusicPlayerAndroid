@@ -299,6 +299,12 @@ public class LocalPlayback implements Playback{
             }
             mMediaPlayer.seekTo(0);
             mMediaPlayer.start();
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    onPlayerStateChanged(MediaPlayerState.STATE_END);
+                }
+            });
 
 
             mWifiLock.acquire();

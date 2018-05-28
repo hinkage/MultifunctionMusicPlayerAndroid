@@ -85,13 +85,6 @@ public class LyricHelper {
                         Matcher matcher = pattern.matcher(line);
                         // 如果存在匹配项，则执行以下操作
                         while (matcher.find()) {
-                            // 得到匹配的所有内容
-                            String msg = matcher.group();
-                            // 得到这个匹配项开始的索引
-                            int start = matcher.start();
-                            // 得到这个匹配项结束的索引
-                            int end = matcher.end();
-
                             // 得到这个匹配项中的组数
                             int groupCount = matcher.groupCount();
                             // 得到每个组中内容
