@@ -1,1 +1,2 @@
 # MultifunctionMusicPlayerAndroid
+学校的课题设计做的一个Android的音乐播放器，基于Google开源的播放器模板android-UniversalMusicPlayer来实现的，实现了ListView显示本地及网络音乐文件列表，CoverFlow界面及该界面下点击图片播放对应音乐，歌词下载及显示，音乐图片下载及显示，摇晃手机切换乐曲，按音乐风格分类显示音乐列表以及下一曲、上一曲、暂停、继续等基础功能。
